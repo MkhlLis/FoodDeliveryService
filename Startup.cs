@@ -1,3 +1,12 @@
+using FoodDeliveryService.Administration.Contracts.Entities;
+using FoodDeliveryService.Administration.Contracts.Interfaces.IHandlers;
+using FoodDeliveryService.Administration.Contracts.Interfaces.IMappers;
+using FoodDeliveryService.Administration.Contracts.Interfaces.IRepositories;
+using FoodDeliveryService.Administration.Handlers;
+using FoodDeliveryService.Administration.Mappers;
+using FoodDeliveryService.Administration.Repositories;
+using FoodDeliveryService.AdministrationContracts.Dtos;
+
 namespace FoodDeliveryService;
 
 public class Startup
@@ -16,6 +25,7 @@ public class Startup
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        Configure(builder.Services);
     }
 
     public static void Configure(WebApplication app)
@@ -30,5 +40,13 @@ public class Startup
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();
+    }
+
+    private static IServiceCollection Configure(IServiceCollection services)
+    {
+        services.AddScoped<IAdministrationCommandHandler, AdministrationCommandHandler>();
+        services.AddScoped<IAdministrationCommandRepository, AdministrationCommandRepository>();
+        services.AddSingleton<IAdministrationMapper<MenuOptionDto, MenuOptionEntity>, AdministrationCommandMapper>();
+        return services;
     }
 }
