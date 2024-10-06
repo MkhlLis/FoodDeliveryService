@@ -9,27 +9,27 @@ internal class AdministrationCommandRepository : IAdministrationCommandRepositor
     public AdministrationCommandRepository()
     {
     }
-    public async Task<MenuOptionEntity> CreateNewMenuOption(MenuOptionEntity option)
+    public MenuOptionEntity CreateNewMenuOption(MenuOptionEntity option)
     {
         // Заглушка.
-        await Task.Delay(TimeSpan.FromSeconds(5));
+        Thread.Sleep(TimeSpan.FromSeconds(5));
         return option;
     }
 
-    public async Task<MenuOptionEntity> UpdateMenuOption(MenuOptionEntity option)
+    public MenuOptionEntity UpdateMenuOption(MenuOptionEntity option)
     {
         // Заглушка.
-        await Task.Delay(TimeSpan.FromSeconds(5));
+        Thread.Sleep(TimeSpan.FromSeconds(5));
         return option;
     }
 
-    public async Task DeleteMenuOption(int menuOptionId)
+    public void DeleteMenuOption(int menuOptionId)
     {
-        await Task.Delay(TimeSpan.FromSeconds(5));
+        Thread.Sleep(TimeSpan.FromSeconds(5));
     }
 
-    public async Task SwitchMenuOption(int menuOptionId, bool isActive)
+    public void SwitchMenuOption(int menuOptionId, bool isActive)
     {
-        await Task.Delay(TimeSpan.FromSeconds(5));
+        Thread.Sleep(TimeSpan.FromSeconds(5));
     }
 }

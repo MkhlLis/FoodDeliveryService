@@ -19,26 +19,26 @@ internal class AdministrationCommandHandler : IAdministrationCommandHandler
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
     }
     
-    public async Task<int> CreateNewMenuOption(MenuOptionDto option)
+    public int CreateNewMenuOption(MenuOptionDto option)
     {
-        var result = await _repository.CreateNewMenuOption(_menuOptionMapper.Map(option));
+        var result = _repository.CreateNewMenuOption(_menuOptionMapper.Map(option));
         return result.Id ?? default;
     }
 
-    public async Task<int> UpdateMenuOption(MenuOptionDto option, int menuOptionId)
+    public int UpdateMenuOption(MenuOptionDto option, int menuOptionId)
     {
         option.Id = menuOptionId;
-        var result = await _repository.UpdateMenuOption(_menuOptionMapper.Map(option));
+        var result = _repository.UpdateMenuOption(_menuOptionMapper.Map(option));
         return result.Id ?? default;
     }
 
-    public async Task DeleteMenuOption(int menuOptionId)
+    public void DeleteMenuOption(int menuOptionId)
     {
-        await _repository.DeleteMenuOption(menuOptionId);
+        _repository.DeleteMenuOption(menuOptionId);
     }
 
-    public async Task SwitchMenuOption(int menuOptionId, bool isActive)
+    public void SwitchMenuOption(int menuOptionId, bool isActive)
     {
-        await _repository.SwitchMenuOption(menuOptionId, isActive);
+        _repository.SwitchMenuOption(menuOptionId, isActive);
     }
 }

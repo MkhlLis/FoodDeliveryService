@@ -4,11 +4,11 @@ namespace FoodDeliveryService.Administration.Contracts.Interfaces.IHandlers;
 
 public interface IAdministrationCommandHandler
 {
-    Task<int> CreateNewMenuOption(MenuOptionDto option);
+    int CreateNewMenuOption(MenuOptionDto option);
 
-    Task<int> UpdateMenuOption(MenuOptionDto option, int menuOptionId);
+    int UpdateMenuOption(MenuOptionDto option, int menuOptionId);
 
-    Task DeleteMenuOption(int menuOptionId);
+    void DeleteMenuOption(int menuOptionId);
     
-    Task SwitchMenuOption(int menuOptionId, bool isActive);
+    void SwitchMenuOption(int menuOptionId, bool isActive);
 }

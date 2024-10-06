@@ -46,6 +46,8 @@ public class Startup
     {
         services.AddScoped<IAdministrationCommandHandler, AdministrationCommandHandler>();
         services.AddScoped<IAdministrationCommandRepository, AdministrationCommandRepository>();
+        services.AddScoped<IAdministrationQueryRepository, AdministrationQueryRepository>();
+        services.AddScoped<IAdministrationQueryHandler, AdministrationQueryHandler>();
         services.AddSingleton<IAdministrationMapper<MenuOptionDto, MenuOptionEntity>, AdministrationCommandMapper>();
         return services;
     }
