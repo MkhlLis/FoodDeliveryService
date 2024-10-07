@@ -6,6 +6,10 @@ using FoodDeliveryService.Administration.Handlers;
 using FoodDeliveryService.Administration.Mappers;
 using FoodDeliveryService.Administration.Repositories;
 using FoodDeliveryService.AdministrationContracts.Dtos;
+using FoodDeliveryService.Orders.Contracts.Interfaces;
+using FoodDeliveryService.Orders.Contracts.Interfaces.IHandlers;
+using FoodDeliveryService.Orders.EventStores;
+using FoodDeliveryService.Orders.Handlers;
 
 namespace FoodDeliveryService;
 
@@ -49,6 +53,9 @@ public class Startup
         services.AddScoped<IAdministrationQueryRepository, AdministrationQueryRepository>();
         services.AddScoped<IAdministrationQueryHandler, AdministrationQueryHandler>();
         services.AddSingleton<IAdministrationMapper<MenuOptionDto, MenuOptionEntity>, AdministrationCommandMapper>();
+
+        services.AddScoped<IOrderCommandHandler, OrderCommandHandler>();
+        services.AddSingleton<IEventStore, InMemoryEventStore>();
         return services;
     }
 }
