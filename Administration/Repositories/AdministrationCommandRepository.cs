@@ -1,35 +1,41 @@
 using FoodDeliveryService.Administration.Contracts.Entities;
 using FoodDeliveryService.Administration.Contracts.Interfaces.IRepositories;
+using FoodDeliveryService.Administration.Contracts.Interfaces.IStores;
 
 
 namespace FoodDeliveryService.Administration.Repositories;
 
 internal class AdministrationCommandRepository : IAdministrationCommandRepository
 {
-    public AdministrationCommandRepository()
+    private readonly IAdministrationStore _administrationStore;
+    
+    public AdministrationCommandRepository(IAdministrationStore administrationStore)
     {
+        _administrationStore = administrationStore;
     }
     public MenuOptionEntity CreateNewMenuOption(MenuOptionEntity option)
     {
         // Заглушка.
-        Thread.Sleep(TimeSpan.FromSeconds(5));
+        _administrationStore.Save(option);
         return option;
     }
 
     public MenuOptionEntity UpdateMenuOption(MenuOptionEntity option)
     {
         // Заглушка.
-        Thread.Sleep(TimeSpan.FromSeconds(5));
+        _administrationStore.Update(option);
         return option;
     }
 
     public void DeleteMenuOption(int menuOptionId)
     {
+        _administrationStore.Delete(menuOptionId);
         Thread.Sleep(TimeSpan.FromSeconds(5));
     }
 
     public void SwitchMenuOption(int menuOptionId, bool isActive)
     {
+        _administrationStore.Switch(menuOptionId, isActive);
         Thread.Sleep(TimeSpan.FromSeconds(5));
     }
 }

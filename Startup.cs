@@ -1,10 +1,13 @@
+using System.Reflection;
 using FoodDeliveryService.Administration.Contracts.Entities;
 using FoodDeliveryService.Administration.Contracts.Interfaces.IHandlers;
 using FoodDeliveryService.Administration.Contracts.Interfaces.IMappers;
 using FoodDeliveryService.Administration.Contracts.Interfaces.IRepositories;
+using FoodDeliveryService.Administration.Contracts.Interfaces.IStores;
 using FoodDeliveryService.Administration.Handlers;
 using FoodDeliveryService.Administration.Mappers;
 using FoodDeliveryService.Administration.Repositories;
+using FoodDeliveryService.Administration.Store;
 using FoodDeliveryService.AdministrationContracts.Dtos;
 using FoodDeliveryService.Orders.Contracts.Interfaces;
 using FoodDeliveryService.Orders.Contracts.Interfaces.IHandlers;
@@ -28,7 +31,12 @@ public class Startup
     {
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(options =>
+        {
+            // using System.Reflection;
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+        });
         Configure(builder.Services);
     }
 
@@ -56,6 +64,7 @@ public class Startup
 
         services.AddScoped<IOrderCommandHandler, OrderCommandHandler>();
         services.AddSingleton<IEventStore, InMemoryEventStore>();
+        services.AddSingleton<IAdministrationStore, InMemoryMenuOptionStore>();
         return services;
     }
 }

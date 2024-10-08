@@ -1,20 +1,28 @@
 using FoodDeliveryService.Administration.Contracts;
 using FoodDeliveryService.Administration.Contracts.Entities;
 using FoodDeliveryService.Administration.Contracts.Interfaces.IRepositories;
+using FoodDeliveryService.Administration.Contracts.Interfaces.IStores;
 
 namespace FoodDeliveryService.Administration.Repositories;
 
 public class AdministrationQueryRepository : IAdministrationQueryRepository
 {
+    private readonly IAdministrationStore _administrationStore;
+    
+    public AdministrationQueryRepository(IAdministrationStore administrationStore)
+    {
+        _administrationStore = administrationStore;
+    }
+    
     public async Task<MenuOptionEntity> GetByOptionIdAsync(int id, CancellationToken cancellationToken)
     {
         await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
-        return default;
+        return await _administrationStore.Get(id);
     }
 
     public async Task<IEnumerable<MenuOptionEntity>> GetAllAsync(PageFilter pageFilter, CancellationToken cancellationToken)
     {
-        var result = new List<MenuOptionEntity>();
+        var result = await _administrationStore.GetAll();
         await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
         return result
             .Where(x => x.Name.ToLower().IndexOf(pageFilter.PartText.ToLower()) != -1)

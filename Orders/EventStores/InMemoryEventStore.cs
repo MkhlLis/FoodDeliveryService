@@ -12,8 +12,8 @@ public class InMemoryEventStore: IEventStore
         _events.Add(orderEvent);
     }
 
-    public IEnumerable<OrderEventBase> GetEvents(Guid orderId)
+    public Task<IEnumerable<OrderEventBase>> GetEvents(Guid orderId)
     {
-        return _events.Where(e => e.OrderId == orderId);
+        return Task.FromResult(_events.Where(e => e.OrderId == orderId));
     }
 }

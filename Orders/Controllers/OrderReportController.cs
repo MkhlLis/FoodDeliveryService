@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodDeliveryService.Orders.Controllers;
 
+/// <summary>
+/// Запрос информации о заказе.
+/// </summary>
 [ApiController]
 [Route("OrderReports")]
 public class OrderReportController
@@ -15,17 +18,28 @@ public class OrderReportController
         _eventStore = eventStore;
     }
 
+    /// <summary>
+    /// Отчет о стадиях изменения заказа.
+    /// </summary>
+    /// <param name="orderId">Идентификатор заказа.</param>
+    /// <returns>Список событий формирующих заказ.</returns>
     [HttpGet("order-report")]
-    public IEnumerable<OrderEventBase> GetOrderReport(Guid orderId)
+    public async Task<IEnumerable<OrderEventBase>> GetOrderReport(Guid orderId)
     {
-        var events = _eventStore.GetEvents(orderId);
+        var events = await _eventStore.GetEvents(orderId);
         return events;
     }
 
+    /// <summary>
+    /// Информация о текущем состоянии заказа.
+    /// </summary>
+    /// <param name="orderId">Идентификатор заказа.</param>
+    /// <returns>Текущее состояние заказа.</returns>
     [HttpGet("order-info")]
-    public Order GetOrderInfo([FromQuery] Guid orderId)
+    public async Task<Order> GetOrderInfo([FromQuery] Guid orderId)
     {
-        var order = new Order(_eventStore.GetEvents(orderId));
+        var events = await _eventStore.GetEvents(orderId);
+        var order = new Order(events);
         return order;
     }
 }

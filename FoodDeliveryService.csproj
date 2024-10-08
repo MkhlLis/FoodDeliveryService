@@ -6,6 +6,10 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
         <PackageReference Include="DependencyInjection.Abstractions" Version="1.0.0-alpha" />
         <PackageReference Include="DependencyInjection.Configuration" Version="0.3.0" />

@@ -6,8 +6,7 @@ public class Order
 {
     public Guid Id { get; private set; }
     public string CustomerName { get; private set; }
-    public List<(string ProductName, int Quantity, decimal Price)>
-        Products { get; private set; } = new List<(string, int, decimal)>();
+    public List<OrderMenuOptionDto> Products { get; } = new();
     public bool IsCompleted { get; private set; }
 
     public Order(IEnumerable<OrderEventBase> events)
@@ -27,8 +26,12 @@ public class Order
                 CustomerName = createdEvent.CustomerName;
                 break;
             case AddProductToOrderEvent productAddedEvent:
-                Products.Add((productAddedEvent.MenuOption, productAddedEvent.Quantity, 
-                    productAddedEvent.Price));
+                Products.Add(new OrderMenuOptionDto
+                {
+                    Name = productAddedEvent.MenuOption,
+                    Quantity = productAddedEvent.Quantity,
+                    Price = productAddedEvent.Price,
+                });
                 break;
             case OrderCompletedEvent _:
                 IsCompleted = true;
